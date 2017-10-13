@@ -9,24 +9,40 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #dddddd;
+		}
+	</style>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
-			<div class="col-m-12">
-				<form action="" method="post" enctype="multipart/form-data">
-				<table class="table">
-						<tr>
-							<td><input type="file" name="file" id="file"></td>
-						</tr>
-						<tr>
-							<td><input type="submit" value="Upload CSV file" name="submit"></td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
+	<?php
+	$page = "home";
+	if (isset($_GET["page"])) {
+		$page = $_GET["page"];
+	}else {
+		echo "<div class=\"container\">";
+			echo "<div class=\"row\">";
+				echo "<div class=\"col-m-12\">";
+					echo "<form method=\"post\" enctype=\"multipart/form-data\">";
+						echo "<table class=\"table\">";
+							echo "<tr><td><input type=\"file\" name=\"file\" id=\"file\"></td></tr>";
+							echo "<tr><td><input type=\"submit\" value=\"Upload CSV file\" name=\"submit\"></td></tr>";
+						echo "</table></form></div></div></div>";
+	}
+	?>
 
 
 	<?php
@@ -45,7 +61,7 @@
 			//Check for if file already exist
 			if (file_exists($targetFile)) {
 				echo $_FILES["file"]["name"]." already exists.";
-				header('Location: contents.php?file='.$_FILES["file"]["name"]);
+				header('Location: index.php?page=table&file='.$_FILES["file"]["name"]);
 			}
 			else {
 				//Store file to server
@@ -63,5 +79,47 @@
 	}
 
 	?>
+
+	<?php
+
+  //Check for if valid parameters are coming in request
+	if(isset($_GET["file"])){
+		$file = $_GET["file"];
+		$test = new ParseCSV();
+		$test->parse($file);
+	}
+
+//Class to handle all CSV parsing task
+	class ParseCSV {
+
+		public function parse($name) {
+    //Open file with valid file name
+			$csv = fopen('uploads/'.$name,'r');
+			$columns = fgetcsv($csv,',');
+			echo "<table>";
+			echo "<tr>";
+    //Will display heading of each column
+			foreach($columns as $column){
+				echo "<th>".$column."</th>";
+			}
+			echo "</tr>";
+			$temp = 1;
+    //Will traverse for each row of file
+			while(($data = fgetcsv($csv,",")) !== FALSE) {
+				$num = count($data);
+				$temp++;
+				echo "<tr>";
+      //Traverse for each value in row
+				for($i = 0; $i < $num; $i++) {
+					echo "<td>".$data[$i]."</td>";
+				}
+				echo "</tr>";
+			}
+			echo "</table>";
+		}
+	}
+
+	?>
+
 </body>
 </html>
