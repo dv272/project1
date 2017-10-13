@@ -24,29 +24,34 @@
 
   <?php
 
-
+  //Check for if valid parameters are coming in request
   if(isset($_GET["file"])){
   $file = $_GET["file"];
   $test = new ParseCSV();
   $test->parse($file);
 }
 
+//Class to handle all CSV parsing task
 class ParseCSV {
 
   public function parse($name) {
+    //Open file with valid file name
     $csv = fopen('uploads/'.$name,'r');
     $columns = fgetcsv($csv,',');
     echo "<table>";
     echo "<tr>";
+    //Will display heading of each column
     foreach($columns as $column){
       echo "<th>".$column."</th>";
     }
     echo "</tr>";
     $temp = 1;
+    //Will traverse for each row of file
     while(($data = fgetcsv($csv,",")) !== FALSE) {
       $num = count($data);
       $temp++;
       echo "<tr>";
+      //Traverse for each value in row
       for($i = 0; $i < $num; $i++) {
         echo "<td>".$data[$i]."</td>";
       }
