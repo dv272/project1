@@ -1,12 +1,32 @@
 <html>
 <head>
 	<title>CSV file</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<form action="" method="post" enctype="multipart/form-data">
-		<input type="file" name="file" id="file">
-		<input type="submit" value="Upload CSV file" name="submit">
-	</form>
+	<div class="container">
+		<div class="row">
+			<div class="col-m-12">
+				<form action="" method="post" enctype="multipart/form-data">
+				<table class="table">
+						<tr>
+							<td><input type="file" name="file" id="file"></td>
+						</tr>
+						<tr>
+							<td><input type="submit" value="Upload CSV file" name="submit"></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
 
 
 	<?php
