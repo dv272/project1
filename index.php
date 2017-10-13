@@ -23,6 +23,7 @@
 		public function UploadFile($targetFile) {
 			if (file_exists($targetFile)) {
 				echo $_FILES["file"]["name"]." already exists.";
+				header('Location: contents.php?file='.$_FILES["file"]["name"]);
 			}
 			else {
 				if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile))
