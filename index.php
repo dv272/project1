@@ -69,7 +69,7 @@
 				{
 					echo basename($_FILES["file"]["name"]). " uploaded.";
 					//will redirect to provided url
-					header('Location: contents.php?file='.$_FILES["file"]["name"]);
+					header('Location: index.php?file='.$_FILES["file"]["name"]);
 				}
 				else {
 					echo "SORRY!!! Dwija";
